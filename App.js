@@ -1,20 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
+import StartGameScreen from "./screens/StartGameScreen";
+import { useState } from "react";
+import GameScreen from "./screens/GameScreen";
+import GameOverScreen from "./screens/GameOverScreen";
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState();
+  const [isGameOver, setIsGameOver] = useState(false);
+
+  function onPickedNumber(pickedNumber) {
+    setUserNumber(pickedNumber);
+    setIsGameOver(false);
+  }
+
+  function onGameOver() {
+    setIsGameOver(true);
+  }
+
+  let screen = <StartGameScreen onPickedNumber={onPickedNumber} />;
+
+  if (userNumber) {
+    screen = <GameScreen userNumber={userNumber} onGameOver={onGameOver} />;
+  }
+  
+  if (isGameOver) {
+    screen = <GameOverScreen />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar></StatusBar>
+      <ImageBackground
+        source={require("./assets/images/home-bg.jpg")}
+        style={styles.rootContainer}
+        imageStyle={styles.imgBg}
+      >
+        <SafeAreaView style={styles.rootContainer}>{screen}</SafeAreaView>
+      </ImageBackground>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  rootContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  imgBg: {
+    opacity: 0.28,
   },
 });
