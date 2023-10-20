@@ -1,9 +1,15 @@
-import { StyleSheet, View, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import Colors from "../constants/Colors";
 
-export default function StartGameScreen({onPickedNumber}) {
+export default function StartGameScreen({ onPickedNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
 
   function onChangeNumber(number) {
@@ -21,24 +27,26 @@ export default function StartGameScreen({onPickedNumber}) {
         { text: "Okey", style: "destructive", onPress: onResetInput },
       ]);
       return;
-      }
-      onPickedNumber(number)
+    }
+    onPickedNumber(number);
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        value={enteredNumber}
-        onChangeText={onChangeNumber}
-      />
-      <View style={styles.buttonContainer}>
-        <PrimaryButton onpress={onResetInput}>Reset</PrimaryButton>
-        <PrimaryButton onpress={onConfirm}>Confirm</PrimaryButton>
+    <KeyboardAvoidingView>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          value={enteredNumber}
+          onChangeText={onChangeNumber}
+        />
+        <View style={styles.buttonContainer}>
+          <PrimaryButton onpress={onResetInput}>Reset</PrimaryButton>
+          <PrimaryButton onpress={onConfirm}>Confirm</PrimaryButton>
+        </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
