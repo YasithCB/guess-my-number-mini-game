@@ -25,7 +25,7 @@ export default function App() {
   let screen = <StartGameScreen onPickedNumber={onPickedNumber} />;
 
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} onGameOver={onGameOver} />;
+    screen = <GameScreen userNumber={userNumber} onStartNewGame={startNewGame} onGameOver={onGameOver} />;
   }
 
   if (isGameOver && userNumber) {
