@@ -1,13 +1,17 @@
 import {
   StyleSheet,
   View,
+  Text,
   TextInput,
   Alert,
   KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
+
 import PrimaryButton from "../components/PrimaryButton";
 import Colors from "../constants/Colors";
+import Title from "../components/Title";
+
 
 export default function StartGameScreen({ onPickedNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -46,6 +50,8 @@ export default function StartGameScreen({ onPickedNumber }) {
           <PrimaryButton onpress={onConfirm}>Confirm</PrimaryButton>
         </View>
       </View>
+      <Title> Enter the Secret Number!</Title>
+      <Text style= {styles.normalText}>Opponent has 5 attempts to guess your secret number.</Text>
     </KeyboardAvoidingView>
   );
 }
@@ -79,4 +85,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
   },
+  normalText: {
+    fontSize: 17,
+    textAlign: 'center',
+    paddingHorizontal: 25
+  }
 });

@@ -6,7 +6,7 @@ import PrimaryButton from "../components/PrimaryButton";
 export default function GameOverScreen({onStartNewGame}) {
   return (
     <View style={styles.container}>
-      <Title>Game Over!</Title>
+      <Title>Game Over! Opponent found your Number</Title>
       <View style={styles.buttonContainer}>
         <PrimaryButton onpress={onStartNewGame}>Start Game Again</PrimaryButton>
       </View>

@@ -1,5 +1,7 @@
 import { Alert, StyleSheet, Text, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
+import { Card } from 'react-native-paper';
+
 import Title from "../components/Title";
 import Colors from "../constants/Colors";
 import PrimaryButton from "../components/PrimaryButton";
@@ -17,7 +19,7 @@ function generateRandomNumber(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-export default function GameScreen({ userNumber, onGameOver }) {
+export default function GameScreen({ userNumber, onGameOver, onStartNewGame }) {
   const initialGuess = generateRandomNumber(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
@@ -25,8 +27,13 @@ export default function GameScreen({ userNumber, onGameOver }) {
   useEffect(() => {
     if (currentGuess === userNumber) {
       onGameOver();
+    } else if (guessRounds.length === 6) {
+      Alert.alert("Congratulations!", "You won! Opponent failed to guess your number.", [
+        { text: "Start Again", onPress: onStartNewGame },
+      ]);
     }
-  }, [currentGuess, userNumber, onGameOver]);
+  }, [currentGuess, userNumber, guessRounds, onGameOver]);
+  
 
   useEffect(() => {
     (minBoundary = 1), (maxBoundary = 100);
@@ -72,9 +79,15 @@ export default function GameScreen({ userNumber, onGameOver }) {
           Lower
         </PrimaryButton>
       </View>
+
+      <Title>Attempts</Title>
       <FlatList
         data={guessRounds}
-        renderItem={(itemData) => <Text>{itemData.item}</Text>}
+        renderItem={(itemData) => (
+          <Card style={styles.card}>
+            <Text style={styles.cardText} >{itemData.item}</Text>
+          </Card>
+        )}
         keyExtractor={(item) => item}
       />
     </View>
@@ -99,4 +112,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 15,
   },
+
+  card: {
+    backgroundColor: 'black',
+    marginVertical: 2,
+    padding: 10,
+    borderRadius: 8,
+  },
+  cardText: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center'
+  },
+
 });
